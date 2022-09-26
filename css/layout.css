@@ -1,0 +1,35 @@
+.hidden {
+  display: none;
+}
+
+.row {
+  display: flex;
+}
+
+.container {
+  max-width: 100vw;
+}
+
+.column-full,
+.column-half {
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 100vw;
+  }
+
+  .column-full,
+  .column-half {
+    padding: 0 0.75rem;
+  }
+
+  .column-half {
+    width: 50%;
+  }
+
+  .golos {
+    margin-top: -3rem;
+  }
+}

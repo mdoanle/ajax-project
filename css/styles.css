@@ -1,0 +1,78 @@
+.emphasize {
+  font-weight: 900;
+  color: rgb(224, 240, 233);
+}
+
+.title {
+  font-size: 1.8rem;
+  text-align: center;
+  line-height: 4rem;
+  color: rgb(149, 173, 191);
+  font-family: Cuprum, sans-serif;
+}
+
+.jc-center {
+  justify-content: center;
+}
+
+form {
+  text-align: center;
+}
+
+.top-margin-20p {
+  margin-top: 20%;
+}
+
+.search-button {
+  margin-top: 5%;
+  margin-left: 70%;
+  background-color: rgb(91, 71, 111);
+  border: thin;
+  border-radius: 5px;
+  color: rgb(149, 173, 191);
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.search-button:hover {
+  cursor: pointer;
+  color: white;
+  box-shadow: 0 0 3px white;
+}
+
+.user-search {
+  width: 250px;
+  height: 32px;
+  border: thin;
+  border-radius: 5px;
+}
+
+body {
+  background: linear-gradient(rgb(2, 1, 2), rgb(79, 57, 101));
+  height: 100vh;
+  width: 100vw;
+}
+
+::placeholder {
+  opacity: 0.3;
+}
+
+.golos {
+  width: 225px;
+  height: 225px;
+  border-radius: 50%;
+  align-items: center;
+}
+
+.align-items {
+  align-items: center;
+}
+
+.golos-container {
+  display: flex;
+  margin-top: 10%;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+}
