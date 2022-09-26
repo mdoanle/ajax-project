@@ -33,6 +33,12 @@ form {
   font-family: "Nunito Sans", sans-serif;
 }
 
+.search-button:hover {
+  cursor: pointer;
+  color: white;
+  box-shadow: 0 0 3px white;
+}
+
 .user-search {
   width: 250px;
   height: 32px;
