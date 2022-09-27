@@ -4,10 +4,12 @@
 
 .row {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .container {
-  max-width: 100vw;
+  width: 100vw;
+  height: 100vh;
 }
 
 .column-full,
@@ -20,16 +22,26 @@
     max-width: 100vw;
   }
 
-  .column-full,
-  .column-half {
-    padding: 0 0.75rem;
-  }
-
   .column-half {
     width: 50%;
   }
 
   .golos {
     margin-top: -3rem;
+  }
+
+  .nav-container {
+    padding-left: 15%;
+  }
+
+  .text-container {
+    margin-top: 15%;
+    width: 68%;
+    height: 68%;
+  }
+
+  .card-image {
+    margin-top: 12%;
+    margin-left: 25%;
   }
 }

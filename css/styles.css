@@ -19,8 +19,8 @@ form {
   text-align: center;
 }
 
-.top-margin-20p {
-  margin-top: 20%;
+.top-margin-15p {
+  margin-top: 15%;
 }
 
 .search-button {
@@ -75,4 +75,95 @@ body {
 .form-container {
   display: flex;
   justify-content: center;
+}
+
+.nav-container {
+  background-color: white;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  width: 100vw;
+}
+
+.logo-container {
+  margin-left: 15px;
+  font-family: Cuprum, sans-serif;
+  font-size: 1.5rem;
+  color: rgb(224, 240, 233);
+}
+
+.search-anchor {
+  margin-left: 30px;
+  font-family: "Nunito Sans", sans-serif;
+  color: rgb(149, 173, 191);
+  font-size: 1.2rem;
+}
+
+.search-anchor:hover {
+  color: white;
+  cursor: pointer;
+}
+
+.gradient {
+  background: linear-gradient(rgb(2, 1, 2), rgb(79, 57, 101));
+}
+
+.bg-grey {
+  background-color: rgb(41, 41, 41);
+}
+
+.card-image {
+  height: 321px;
+  width: 227px;
+}
+
+.img-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.card-name {
+  border-bottom: 1px solid grey;
+  font-family: Gudea, sans-serif;
+}
+
+.text-container {
+  margin-left: 7px;
+  margin-right: 7px;
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.card-type {
+  border-bottom: 1px solid grey;
+  font-family: Gudea, sans-serif;
+}
+
+.card-text {
+  margin-bottom: 10%;
+  font-family: Gudea, sans-serif;
+}
+
+.card-text-mechanics {
+  margin-bottom: 10%;
+  font-family: Gudea, sans-serif;
+}
+
+.flavor-text {
+  margin-bottom: 10%;
+  font-family: Gudea, sans-serif;
+  font-style: italic;
+}
+
+.artist {
+  border-top: 1px solid grey;
+  font-family: Gudea, sans-serif;
+}
+
+p {
+  margin: -0.5px;
 }
