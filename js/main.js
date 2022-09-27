@@ -55,7 +55,7 @@ function showCardInfo(object) {
   $cardType.textContent = object.originalType;
   $cardText.textContent = splitCardText[0];
   $cardMechanics.textContent = splitCardText[1];
-  $flavorText.textContent = '"' + object.flavor + '"';
+  $flavorText.textContent = object.flavor;
   if (object.flavor == null) {
     $flavorText.textContent = '';
   }
