@@ -24,6 +24,7 @@
 
   .column-half {
     width: 50%;
+    height: 85%;
   }
 
   .golos {
@@ -37,7 +38,7 @@
   .text-container {
     margin-top: 15%;
     width: 68%;
-    height: 68%;
+    height: 100%;
   }
 
   .card-image {

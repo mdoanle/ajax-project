@@ -10,13 +10,19 @@
   <link rel="stylesheet" href="css/styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer" />
   <link href="https://fonts.googleapis.com/css2?family=Cuprum&family=Gudea&family=Nunito+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
   </header>
   <main>
-    <div class="home-screen">
+    <div class="home-screen hidden">
       <div class="container">
         <div class="row jc-center top-margin-15p">
           <div class="column-full">
@@ -44,7 +50,7 @@
         </div>
       </div>
     </div>
-    <div class="card-view hidden">
+    <div class="card-view">
       <div class="container bg-grey">
         <div class="row">
           <div class="column-full">
@@ -62,7 +68,11 @@
           </div>
           <div class="column-half">
             <div class="text-container">
-              <p class="card-name"><span class="card-title"> </span><span class="mana-cost"> </span></p>
+              <p class="card-name">
+                <span class="card-title"> </span>
+                <span class="mana-cost"></span>
+                <i class="fa-regular fa-star"></i>
+              </p>
               <p class="card-type">  </p>
               <p class="card-text"> </p>
               <p class="card-text-mechanics"></p>

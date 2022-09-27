@@ -1,5 +1,5 @@
 var $form = document.querySelector('form');
-var $searchAnchor = document.querySelector('.search-anchor');
+var $starIcon = document.querySelector('.fa-regular');
 
 $form.addEventListener('submit', handleSubmit);
 function handleSubmit(event) {
@@ -19,16 +19,20 @@ function handleSubmit(event) {
   xhr.send();
 }
 
-$searchAnchor.addEventListener('click', handleClick);
+document.addEventListener('click', handleClick);
 function handleClick(event) {
   if (event.target.matches('.search-anchor')) {
     swapToSearchView();
+  } else if (event.target.matches('.fa-regular')) {
+    fillStar();
   }
 }
 
 function swapToSearchView() {
+  var $form = document.querySelector('form');
   var $searchView = document.querySelector('.home-screen');
   var $cardView = document.querySelector('.card-view');
+  $form.reset();
   $searchView.className = 'home-screen';
   $cardView.className = 'card-view hidden';
 }
@@ -51,7 +55,7 @@ function showCardInfo(object) {
   var splitCardText = object.text.split('\n');
 
   $cardName.textContent = object.name;
-  $manaCost.textContent = object.manaCost;
+  $manaCost.textContent = 'Cost: ' + object.manaCost;
   $cardType.textContent = object.originalType;
   $cardText.textContent = splitCardText[0];
   $cardMechanics.textContent = splitCardText[1];
@@ -60,4 +64,8 @@ function showCardInfo(object) {
     $flavorText.textContent = '';
   }
   $artistName.textContent = 'Illustrated by: ' + object.artist;
+}
+
+function fillStar() {
+  $starIcon.className = 'fa-solid fa-star';
 }
