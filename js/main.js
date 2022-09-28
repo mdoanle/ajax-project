@@ -6,14 +6,12 @@ function handleSubmit(event) {
   event.preventDefault();
   var $searchBar = document.querySelector('.user-search');
   var userSearch = $searchBar.value;
-  var $cardImage = document.querySelector('.card-image');
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.magicthegathering.io/v1/cards?name=' + userSearch);
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     var card = xhr.response.cards[0];
     swapToCardView();
-    $cardImage.src = card.imageUrl;
     showCardInfo(card);
   });
   xhr.send();
@@ -47,6 +45,7 @@ function swapToCardView() {
 }
 
 function showCardInfo(object) {
+  var $cardImage = document.querySelector('.card-image');
   var $cardName = document.querySelector('.card-title');
   var $manaCost = document.querySelector('.mana-cost');
   var $cardType = document.querySelector('.card-type');
@@ -56,6 +55,7 @@ function showCardInfo(object) {
   var $artistName = document.querySelector('.artist');
   var splitCardText = object.text.split('\n');
 
+  $cardImage.src = object.imageUrl;
   $cardName.textContent = object.name;
   $manaCost.textContent = 'Cost: ' + object.manaCost;
   $cardType.textContent = object.originalType;
@@ -78,6 +78,7 @@ function unfillStar() {
 
 function saveCard() {
   var newObj = {};
+  var $cardImage = document.querySelector('.card-image');
   var $cardName = document.querySelector('.card-title');
   var $manaCost = document.querySelector('.mana-cost');
   var $cardType = document.querySelector('.card-type');
@@ -86,6 +87,7 @@ function saveCard() {
   var $flavorText = document.querySelector('.flavor-text');
   var $artistName = document.querySelector('.artist');
 
+  newObj.imageUrl = $cardImage.getAttribute('src');
   newObj.savedCardID = data.savedCardID;
   newObj.cardTitle = $cardName.textContent;
   newObj.manaCost = $manaCost.textContent;
