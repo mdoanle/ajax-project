@@ -128,6 +128,8 @@ body {
 .card-name {
   border-bottom: 1px solid grey;
   font-family: Gudea, sans-serif;
+  display: flex;
+  justify-content: space-between;
 }
 
 .text-container {
@@ -166,4 +168,8 @@ body {
 
 p {
   margin: -0.5px;
+}
+
+.fa-star {
+  align-self: right;
 }
