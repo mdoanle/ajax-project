@@ -25,7 +25,7 @@ form {
 
 .search-button {
   margin-top: 5%;
-  margin-left: 70%;
+  margin-left: 0%;
   background-color: rgb(91, 71, 111);
   border: thin;
   border-radius: 5px;
@@ -99,7 +99,19 @@ body {
   font-size: 1.2rem;
 }
 
+.favorite-anchor {
+  margin-left: 30px;
+  font-family: "Nunito Sans", sans-serif;
+  color: rgb(149, 173, 191);
+  font-size: 1.2rem;
+}
+
 .search-anchor:hover {
+  color: white;
+  cursor: pointer;
+}
+
+.favorite-anchor:hover {
   color: white;
   cursor: pointer;
 }
@@ -172,4 +184,36 @@ p {
 
 .fa-star {
   align-self: right;
+}
+
+.favorite-button {
+  margin-top: 5%;
+  margin-right: 0%;
+  background-color: rgb(91, 71, 111);
+  border: thin;
+  border-radius: 5px;
+  color: rgb(149, 173, 191);
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.display-flex {
+  display: flex;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.mt-5p {
+  margin-top: 5%;
+}
+
+.favorite-image {
+  display: block;
+  max-width: 95%;
+  max-height: 100%;
+}
+
+.ai-center {
+  align-items: center;
 }

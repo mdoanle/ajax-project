@@ -22,7 +22,7 @@
   <header>
   </header>
   <main>
-    <div class="home-screen">
+    <div class="home-screen hidden">
       <div class="container">
         <div class="row jc-center top-margin-15p">
           <div class="column-full">
@@ -34,8 +34,13 @@
             <div class="form-container">
               <form>
                 <input type="text" class="user-search" placeholder="Enter card name...">
-                <div class="column-full">
-                  <button type="submit" class="search-button">Search</button>
+                <div class="column-full display-flex space-between mt-5p">
+                  <div class="favorite-container">
+                    <button type="button" class="favorite-button">Deck</button>
+                  </div>
+                  <div class="search-container">
+                    <button type="submit" class="search-button">Search</button>
+                  </div>
                 </div>
               </form>
             </div>
@@ -57,6 +62,7 @@
             <div class="nav-container gradient">
               <div class="logo-container"> Golos</div>
               <a class="search-anchor">Search</a>
+              <a class="favorite-anchor">Deck</a>
             </div>
           </div>
         </div>
@@ -78,6 +84,36 @@
               <p class="card-text-mechanics"></p>
               <p class="flavor-text"></p>
               <p class="artist"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="favorite-cards-view">
+      <div class="container bg-grey">
+        <div class="row">
+          <div class="column-full">
+            <div class="nav-container gradient">
+              <div class="logo-container"> Golos</div>
+              <a class="search-anchor">Search</a>
+              <a class="favorite-anchor">Deck</a>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-5p">
+          <div class="favorite-column-half display-flex ai-center jc-center ">
+            <div class="favorite-image-container">
+              <img src="http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=129688&type=card" alt="placeholder" class="favorite-image">
+            </div>
+          </div>
+          <div class="favorite-column-half display-flex ai-center jc-center ">
+            <div class="favorite-image-container">
+              <img src="https://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=295751&type=card" alt="placeholder" class="favorite-image">
+            </div>
+          </div>
+          <div class="favorite-column-half display-flex ai-center jc-center ">
+            <div class="favorite-image-container">
+              <img src="https://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=295751&type=card" alt="placeholder" class="favorite-image">
             </div>
           </div>
         </div>
