@@ -25,6 +25,7 @@ function handleClick(event) {
     swapToSearchView();
   } else if (event.target.matches('.fa-regular')) {
     fillStar();
+    saveCard();
   }
 }
 
@@ -68,4 +69,26 @@ function showCardInfo(object) {
 
 function fillStar() {
   $starIcon.className = 'fa-solid fa-star';
+}
+
+function saveCard() {
+  var newObj = {};
+  var $cardName = document.querySelector('.card-title');
+  var $manaCost = document.querySelector('.mana-cost');
+  var $cardType = document.querySelector('.card-type');
+  var $cardText = document.querySelector('.card-text');
+  var $cardMechanics = document.querySelector('.card-text-mechanics');
+  var $flavorText = document.querySelector('.flavor-text');
+  var $artistName = document.querySelector('.artist');
+
+  newObj.savedCardID = data.savedCardID;
+  newObj.cardTitle = $cardName.textContent;
+  newObj.manaCost = $manaCost.textContent;
+  newObj.cardType = $cardType.textContent;
+  newObj.cardText = $cardText.textContent;
+  newObj.cardMechanics = $cardMechanics.textContent;
+  newObj.flavorText = $flavorText.textContent;
+  newObj.artistName = $artistName.textContent;
+  data.savedCardID++;
+  data.savedCards.unshift(newObj);
 }
