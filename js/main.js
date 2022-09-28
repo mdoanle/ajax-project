@@ -30,6 +30,19 @@ function handleClick(event) {
     $parentAppend.appendChild(recentFav);
   } else if (event.target.matches('.favorite-anchor') || event.target.matches('.favorite-button')) {
     swapToFavoriteView();
+  } else if (event.target.matches('.favorite-image')) {
+    showModal();
+    var $targetDiv = event.target.closest('[data-card-id]');
+    var cardID = parseInt($targetDiv.getAttribute('data-card-id'));
+    for (var i = 0; i < data.savedCards.length; i++) {
+      if (cardID === data.savedCards[i].savedCardID) {
+        data.inspectedCard = data.savedCards[i];
+      }
+    }
+    var chosenCard = data.inspectedCard;
+    repopulateModal(chosenCard);
+  } else if (event.target.matches('.modal-content') || (event.target.matches('.img-container'))) {
+    hideModal();
   }
 }
 
@@ -120,6 +133,7 @@ function saveCard() {
 function renderElement(data) {
   var columnDiv = document.createElement('div');
   columnDiv.setAttribute('class', 'favorite-column-half display-flex ai-center jc-center');
+  columnDiv.setAttribute('data-card-id', data.savedCardID);
 
   var imgContainerDiv = document.createElement('div');
   imgContainerDiv.setAttribute('class', 'favorite-image-container');
@@ -141,4 +155,38 @@ function handleContentLoaded(event) {
     var favoritedCardLoop = renderElement(data.savedCards[i]);
     $parentAppend.appendChild(favoritedCardLoop);
   }
+}
+
+function showModal() {
+  var $modalBG = document.querySelector('.modal-container');
+  var $modalContent = document.querySelector('.modal-content');
+  $modalBG.className = 'modal-container';
+  $modalContent.className = 'modal-content';
+}
+
+function hideModal() {
+  var $modalBG = document.querySelector('.modal-container');
+  var $modalContent = document.querySelector('.modal-content');
+  $modalBG.className = 'modal-container hidden';
+  $modalContent.className = 'modal-content hidden';
+}
+
+function repopulateModal(object) {
+  var $cardImage = document.querySelector('.modal.card-image');
+  var $cardName = document.querySelector('.modal.card-title');
+  var $manaCost = document.querySelector('.modal.mana-cost');
+  var $cardType = document.querySelector('.modal.card-type');
+  var $cardText = document.querySelector('.modal.card-text');
+  var $cardMechanics = document.querySelector('.modal.card-text-mechanics');
+  var $flavorText = document.querySelector('.modal.flavor-text');
+  var $artistName = document.querySelector('.modal.artist');
+
+  $cardImage.src = object.imageUrl;
+  $cardName.textContent = object.cardTitle;
+  $manaCost.textContent = object.manaCost;
+  $cardType.textContent = object.cardType;
+  $cardText.textContent = object.cardText;
+  $cardMechanics.textContent = object.cardMechanics;
+  $flavorText.textContent = object.flavorText;
+  $artistName.textContent = object.artistName;
 }
