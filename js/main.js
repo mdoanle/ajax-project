@@ -23,6 +23,7 @@ document.addEventListener('click', handleClick);
 function handleClick(event) {
   if (event.target.matches('.search-anchor')) {
     swapToSearchView();
+    unfillStar();
   } else if (event.target.matches('.fa-regular')) {
     fillStar();
     saveCard();
@@ -69,6 +70,10 @@ function showCardInfo(object) {
 
 function fillStar() {
   $starIcon.className = 'fa-solid fa-star';
+}
+
+function unfillStar() {
+  $starIcon.className = 'fa-regular fa-star';
 }
 
 function saveCard() {
