@@ -53,4 +53,9 @@
   .favorite-column-half {
     width: calc(100%/3);
   }
+
+  img.favorite-image {
+    height: 350px;
+    width: 250px;
+  }
 }

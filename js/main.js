@@ -6,14 +6,12 @@ function handleSubmit(event) {
   event.preventDefault();
   var $searchBar = document.querySelector('.user-search');
   var userSearch = $searchBar.value;
-  var $cardImage = document.querySelector('.card-image');
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://api.magicthegathering.io/v1/cards?name=' + userSearch);
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     var card = xhr.response.cards[0];
     swapToCardView();
-    $cardImage.src = card.imageUrl;
     showCardInfo(card);
   });
   xhr.send();
@@ -25,28 +23,46 @@ function handleClick(event) {
     swapToSearchView();
     unfillStar();
   } else if (event.target.matches('.fa-regular')) {
+    var $parentAppend = document.querySelector('.row.mt-5p');
     fillStar();
     saveCard();
+    var recentFav = renderElement(data.savedCards[0]);
+    $parentAppend.appendChild(recentFav);
+  } else if (event.target.matches('.favorite-anchor') || event.target.matches('.favorite-button')) {
+    swapToFavoriteView();
   }
 }
 
 function swapToSearchView() {
-  var $form = document.querySelector('form');
   var $searchView = document.querySelector('.home-screen');
   var $cardView = document.querySelector('.card-view');
+  var $favoriteView = document.querySelector('.favorite-cards-view');
   $form.reset();
   $searchView.className = 'home-screen';
   $cardView.className = 'card-view hidden';
+  $favoriteView.className = 'favorite-cards-view hidden';
 }
 
 function swapToCardView() {
   var $searchView = document.querySelector('.home-screen');
   var $cardView = document.querySelector('.card-view');
-  $cardView.className = 'card-view';
+  var $favoriteView = document.querySelector('.favorite-cards-view');
   $searchView.className = 'home-screen hidden';
+  $cardView.className = 'card-view';
+  $favoriteView.className = 'favorite-cards-view hidden';
+}
+
+function swapToFavoriteView() {
+  var $searchView = document.querySelector('.home-screen');
+  var $cardView = document.querySelector('.card-view');
+  var $favoriteView = document.querySelector('.favorite-cards-view');
+  $searchView.className = 'home-screen hidden';
+  $cardView.className = 'card-view hidden';
+  $favoriteView.className = 'favorite-cards-view';
 }
 
 function showCardInfo(object) {
+  var $cardImage = document.querySelector('.card-image');
   var $cardName = document.querySelector('.card-title');
   var $manaCost = document.querySelector('.mana-cost');
   var $cardType = document.querySelector('.card-type');
@@ -56,6 +72,7 @@ function showCardInfo(object) {
   var $artistName = document.querySelector('.artist');
   var splitCardText = object.text.split('\n');
 
+  $cardImage.src = object.imageUrl;
   $cardName.textContent = object.name;
   $manaCost.textContent = 'Cost: ' + object.manaCost;
   $cardType.textContent = object.originalType;
@@ -78,6 +95,7 @@ function unfillStar() {
 
 function saveCard() {
   var newObj = {};
+  var $cardImage = document.querySelector('.card-image');
   var $cardName = document.querySelector('.card-title');
   var $manaCost = document.querySelector('.mana-cost');
   var $cardType = document.querySelector('.card-type');
@@ -86,6 +104,7 @@ function saveCard() {
   var $flavorText = document.querySelector('.flavor-text');
   var $artistName = document.querySelector('.artist');
 
+  newObj.imageUrl = $cardImage.getAttribute('src');
   newObj.savedCardID = data.savedCardID;
   newObj.cardTitle = $cardName.textContent;
   newObj.manaCost = $manaCost.textContent;
@@ -96,4 +115,30 @@ function saveCard() {
   newObj.artistName = $artistName.textContent;
   data.savedCardID++;
   data.savedCards.unshift(newObj);
+}
+
+function renderElement(data) {
+  var columnDiv = document.createElement('div');
+  columnDiv.setAttribute('class', 'favorite-column-half display-flex ai-center jc-center');
+
+  var imgContainerDiv = document.createElement('div');
+  imgContainerDiv.setAttribute('class', 'favorite-image-container');
+  columnDiv.appendChild(imgContainerDiv);
+
+  var favoriteImg = document.createElement('img');
+  favoriteImg.setAttribute('class', 'favorite-image');
+  favoriteImg.setAttribute('alt', 'placeholder');
+  favoriteImg.setAttribute('src', data.imageUrl);
+  imgContainerDiv.appendChild(favoriteImg);
+
+  return columnDiv;
+}
+
+window.addEventListener('DOMContentLoaded', handleContentLoaded);
+function handleContentLoaded(event) {
+  var $parentAppend = document.querySelector('.row.bg-grey');
+  for (var i = 0; i < data.savedCards.length; i++) {
+    var favoritedCardLoop = renderElement(data.savedCards[i]);
+    $parentAppend.appendChild(favoritedCardLoop);
+  }
 }

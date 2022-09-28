@@ -208,12 +208,18 @@ p {
   margin-top: 5%;
 }
 
-.favorite-image {
-  display: block;
-  max-width: 95%;
-  max-height: 100%;
-}
-
 .ai-center {
   align-items: center;
+}
+
+.favorite-image-container {
+  margin: 5%;
+  height: 100%;
+  width: 100%;
+}
+
+img.favorite-image {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
 }
