@@ -247,3 +247,24 @@ p {
   color: white;
   box-shadow: 0 0 3px white;
 }
+
+.delete-button {
+  border: thin;
+  border-radius: 5px;
+  color: white;
+  font-family: "Nunito Sans", sans-serif;
+  background-color: red;
+  width: 100px;
+}
+
+.delete-button:hover {
+  box-shadow: 0 0 5px white;
+  color: yellow;
+}
+
+.delete-container {
+  display: flex;
+  padding-top: 10px;
+  justify-content: right;
+  padding-right: 10px;
+}

@@ -67,4 +67,11 @@
   .row.bg-grey {
     padding-left: 7%;
   }
+
+  .delete-container {
+    display: flex;
+    justify-content: center;
+    width: 69%;
+    padding-top: 10px;
+  }
 }

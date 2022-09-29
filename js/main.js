@@ -5,6 +5,7 @@ var $navBarFavView = document.querySelector('.nav-container.gradient.fv');
 var $homeScreenFav = document.querySelector('.favorite-button');
 var $favCardParentEle = document.querySelector('.row.bg-grey');
 var $modalContainer = document.querySelector('.modal-container');
+var $deleteButton = document.querySelector('.delete-button');
 
 $form.addEventListener('submit', handleSubmit);
 function handleSubmit(event) {
@@ -72,9 +73,21 @@ function modalPop(event) {
 
 $modalContainer.addEventListener('click', closeModal);
 function closeModal(event) {
-  if (event.target.matches('.modal-content') || event.target.matches('.img-container')) {
+  if (event.target.matches('.modal-content') || event.target.matches('.img-container') || event.target.matches('.column-half')) {
     hideModal();
   }
+}
+
+$deleteButton.addEventListener('click', deleteFavCard);
+function deleteFavCard(event) {
+  var $favCard = document.querySelector(`div[data-card-id="${data.inspectedCard.savedCardID}"]`);
+  data.savedCards = data.savedCards.filter(card => card.savedCardID !== data.inspectedCard.savedCardID);
+  if ($favCard != null) {
+    $favCard.remove();
+  }
+  swapToFavoriteView();
+  data.inspectedCard = null;
+  hideModal();
 }
 
 function swapToSearchView() {
