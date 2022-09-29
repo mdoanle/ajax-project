@@ -1,5 +1,4 @@
 .emphasize {
-  font-weight: 900;
   color: rgb(224, 240, 233);
 }
 
@@ -15,17 +14,12 @@
   justify-content: center;
 }
 
-form {
-  text-align: center;
-}
-
 .top-margin-15p {
   margin-top: 15%;
 }
 
 .search-button {
   margin-top: 5%;
-  margin-left: 0%;
   background-color: rgb(91, 71, 111);
   border: thin;
   border-radius: 5px;
@@ -78,11 +72,9 @@ body {
 }
 
 .nav-container {
-  background-color: white;
   height: 50px;
   display: flex;
   align-items: center;
-  width: 100vw;
 }
 
 .logo-container {
@@ -134,7 +126,6 @@ body {
   justify-content: center;
   margin-top: 5px;
   margin-bottom: 10px;
-  width: 100%;
 }
 
 .card-name {
@@ -179,7 +170,7 @@ body {
 }
 
 p {
-  margin: -0.5px;
+  margin: 5px;
 }
 
 .fa-star {

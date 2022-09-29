@@ -11,6 +11,7 @@ if (savedCardsJSON != null) {
 }
 
 addEventListener('beforeunload', handleBeforeUnload);
+addEventListener('pagehide', handleBeforeUnload);
 function handleBeforeUnload(event) {
   var dataJSON = JSON.stringify(data);
   localStorage.setItem('Saved Cards', dataJSON);

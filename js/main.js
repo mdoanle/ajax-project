@@ -90,6 +90,15 @@ function deleteFavCard(event) {
   hideModal();
 }
 
+window.addEventListener('DOMContentLoaded', handleContentLoaded);
+function handleContentLoaded(event) {
+  var $parentAppend = document.querySelector('.row.bg-grey');
+  for (var i = 0; i < data.savedCards.length; i++) {
+    var favoritedCardLoop = renderElement(data.savedCards[i]);
+    $parentAppend.appendChild(favoritedCardLoop);
+  }
+}
+
 function swapToSearchView() {
   var $searchView = document.querySelector('.home-screen');
   var $cardView = document.querySelector('.card-view');
@@ -176,7 +185,7 @@ function saveCard() {
 
 function renderElement(data) {
   var columnDiv = document.createElement('div');
-  columnDiv.setAttribute('class', 'favorite-column-half display-flex ai-center jc-center');
+  columnDiv.setAttribute('class', 'favorite-column-half display-flex ai-center');
   columnDiv.setAttribute('data-card-id', data.savedCardID);
 
   var imgContainerDiv = document.createElement('div');
@@ -190,15 +199,6 @@ function renderElement(data) {
   imgContainerDiv.appendChild(favoriteImg);
 
   return columnDiv;
-}
-
-window.addEventListener('DOMContentLoaded', handleContentLoaded);
-function handleContentLoaded(event) {
-  var $parentAppend = document.querySelector('.row.bg-grey');
-  for (var i = 0; i < data.savedCards.length; i++) {
-    var favoritedCardLoop = renderElement(data.savedCards[i]);
-    $parentAppend.appendChild(favoritedCardLoop);
-  }
 }
 
 function showModal() {
