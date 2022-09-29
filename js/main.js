@@ -23,11 +23,11 @@ function handleClick(event) {
     swapToSearchView();
     unfillStar();
   } else if (event.target.matches('.fa-regular')) {
-    var $parentAppend = document.querySelector('.row.mt-5p');
+    var $parentAppend = document.querySelector('.row.bg-grey');
     fillStar();
     saveCard();
     var recentFav = renderElement(data.savedCards[0]);
-    $parentAppend.appendChild(recentFav);
+    $parentAppend.prepend(recentFav);
   } else if (event.target.matches('.favorite-anchor') || event.target.matches('.favorite-button')) {
     swapToFavoriteView();
   } else if (event.target.matches('.favorite-image')) {
