@@ -1,5 +1,10 @@
 var $form = document.querySelector('form');
 var $starIcon = document.querySelector('.fa-regular');
+var $navBarCardView = document.querySelector('.nav-container.gradient.cv');
+var $navBarFavView = document.querySelector('.nav-container.gradient.fv');
+var $homeScreenFav = document.querySelector('.favorite-button');
+var $favCardParentEle = document.querySelector('.row.bg-grey');
+var $modalContainer = document.querySelector('.modal-container');
 
 $form.addEventListener('submit', handleSubmit);
 function handleSubmit(event) {
@@ -17,31 +22,57 @@ function handleSubmit(event) {
   xhr.send();
 }
 
-document.addEventListener('click', handleClick);
-function handleClick(event) {
-  if (event.target.matches('.search-anchor')) {
+$navBarCardView.addEventListener('click', navSearchAnchor);
+function navSearchAnchor(event) {
+  if (event.target.matches('.search-anchor.cv')) {
     swapToSearchView();
     unfillStar();
-  } else if (event.target.matches('.fa-regular')) {
-    var $parentAppend = document.querySelector('.row.bg-grey');
-    fillStar();
-    saveCard();
-    var recentFav = renderElement(data.savedCards[0]);
-    $parentAppend.prepend(recentFav);
-  } else if (event.target.matches('.favorite-anchor') || event.target.matches('.favorite-button')) {
+  } else if (event.target.matches('.favorite-anchor.cv')) {
     swapToFavoriteView();
-  } else if (event.target.matches('.favorite-image')) {
-    showModal();
-    var $targetDiv = event.target.closest('[data-card-id]');
-    var cardID = parseInt($targetDiv.getAttribute('data-card-id'));
-    for (var i = 0; i < data.savedCards.length; i++) {
-      if (cardID === data.savedCards[i].savedCardID) {
-        data.inspectedCard = data.savedCards[i];
-      }
+  }
+}
+
+$navBarFavView.addEventListener('click', favSearchAnchor);
+function favSearchAnchor(event) {
+  if (event.target.matches('.search-anchor.fv')) {
+    swapToSearchView();
+    unfillStar();
+  } else if (event.target.matches('.favorite-anchor.fv')) {
+    swapToFavoriteView();
+  }
+}
+
+$starIcon.addEventListener('click', favCard);
+function favCard(event) {
+  var $parentAppend = document.querySelector('.row.bg-grey');
+  fillStar();
+  saveCard();
+  var recentFav = renderElement(data.savedCards[0]);
+  $parentAppend.prepend(recentFav);
+}
+
+$homeScreenFav.addEventListener('click', homeScreenFavSwap);
+function homeScreenFavSwap(event) {
+  swapToFavoriteView();
+}
+
+$favCardParentEle.addEventListener('click', modalPop);
+function modalPop(event) {
+  showModal();
+  var $targetDiv = event.target.closest('[data-card-id]');
+  var cardID = parseInt($targetDiv.getAttribute('data-card-id'));
+  for (var i = 0; i < data.savedCards.length; i++) {
+    if (cardID === data.savedCards[i].savedCardID) {
+      data.inspectedCard = data.savedCards[i];
     }
-    var chosenCard = data.inspectedCard;
-    repopulateModal(chosenCard);
-  } else if (event.target.matches('.modal-content') || (event.target.matches('.img-container'))) {
+  }
+  var chosenCard = data.inspectedCard;
+  repopulateModal(chosenCard);
+}
+
+$modalContainer.addEventListener('click', closeModal);
+function closeModal(event) {
+  if (event.target.matches('.modal-content') || event.target.matches('.img-container')) {
     hideModal();
   }
 }
