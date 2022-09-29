@@ -25,7 +25,7 @@ form {
 
 .search-button {
   margin-top: 5%;
-  margin-left: 70%;
+  margin-left: 0%;
   background-color: rgb(91, 71, 111);
   border: thin;
   border-radius: 5px;
@@ -99,7 +99,19 @@ body {
   font-size: 1.2rem;
 }
 
+.favorite-anchor {
+  margin-left: 30px;
+  font-family: "Nunito Sans", sans-serif;
+  color: rgb(149, 173, 191);
+  font-size: 1.2rem;
+}
+
 .search-anchor:hover {
+  color: white;
+  cursor: pointer;
+}
+
+.favorite-anchor:hover {
   color: white;
   cursor: pointer;
 }
@@ -172,4 +184,66 @@ p {
 
 .fa-star {
   align-self: right;
+}
+
+.favorite-button {
+  margin-top: 5%;
+  margin-right: 0%;
+  background-color: rgb(91, 71, 111);
+  border: thin;
+  border-radius: 5px;
+  color: rgb(149, 173, 191);
+  font-family: "Nunito Sans", sans-serif;
+}
+
+.display-flex {
+  display: flex;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.mt-5p {
+  margin-top: 5%;
+}
+
+.ai-center {
+  align-items: center;
+}
+
+.favorite-image-container {
+  margin: 5%;
+  height: 100%;
+  width: 100%;
+}
+
+.favorite-image {
+  height: 90%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.favorite-image:hover {
+  cursor: pointer;
+  box-shadow: 0 0 5px lightcyan;
+}
+
+.modal-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0 0 0 / 50%);
+}
+
+.favorite-column-half {
+  margin-top: 10px;
+}
+
+.favorite-button:hover {
+  cursor: pointer;
+  color: white;
+  box-shadow: 0 0 3px white;
 }

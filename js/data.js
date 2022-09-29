@@ -1,6 +1,7 @@
 /* exported data */
 var data = {
   savedCards: [],
+  inspectedCard: null,
   savedCardID: 1
 };
 
