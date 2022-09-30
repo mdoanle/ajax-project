@@ -6,10 +6,14 @@ var $homeScreenFav = document.querySelector('.favorite-button');
 var $favCardParentEle = document.querySelector('.row.bg-grey');
 var $modalContainer = document.querySelector('.modal-container');
 var $deleteButton = document.querySelector('.delete-button');
+var $navBarNoResult = document.querySelector('.nav-container.gradient.nr');
+var $navBarNetworkError = document.querySelector('.nav-container.gradient.ne');
+var $navBarNoSavedCards = document.querySelector('.nav-container.gradient.nfv');
 
 $form.addEventListener('submit', handleSubmit);
 function handleSubmit(event) {
   event.preventDefault();
+  viewSwap('loading-screen');
   var $searchBar = document.querySelector('.user-search');
   var userSearch = $searchBar.value;
   var xhr = new XMLHttpRequest();
@@ -17,8 +21,16 @@ function handleSubmit(event) {
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     var card = xhr.response.cards[0];
-    swapToCardView();
-    showCardInfo(card);
+    if (card === undefined) {
+      viewSwap('no-results');
+    } else {
+      clearResults();
+      viewSwap('card-results');
+      showCardInfo(card);
+    }
+    if (xhr.status !== 200) {
+      viewSwap('network-error');
+    }
   });
   xhr.send();
 }
@@ -26,20 +38,73 @@ function handleSubmit(event) {
 $navBarCardView.addEventListener('click', navSearchAnchor);
 function navSearchAnchor(event) {
   if (event.target.matches('.search-anchor.cv')) {
-    swapToSearchView();
+    $form.reset();
+    viewSwap('search-page');
     unfillStar();
+    resetCardView();
   } else if (event.target.matches('.favorite-anchor.cv')) {
-    swapToFavoriteView();
+    if (data.savedCards.length === 0) {
+      viewSwap('no-favorite-cards');
+    } else {
+      viewSwap('favorite-cards');
+    }
   }
 }
 
 $navBarFavView.addEventListener('click', favSearchAnchor);
 function favSearchAnchor(event) {
   if (event.target.matches('.search-anchor.fv')) {
-    swapToSearchView();
+    $form.reset();
+    viewSwap('search-page');
     unfillStar();
+    resetCardView();
   } else if (event.target.matches('.favorite-anchor.fv')) {
-    swapToFavoriteView();
+    if (data.savedCards.length === 0) {
+      viewSwap('no-favorite-cards');
+    } else {
+      viewSwap('favorite-cards');
+    }
+  }
+}
+
+$navBarNoResult.addEventListener('click', noResultSearchAnchor);
+function noResultSearchAnchor(event) {
+  if (event.target.matches('.search-anchor.nr')) {
+    $form.reset();
+    viewSwap('search-page');
+  } else if (event.target.matches('.favorite-anchor.nr')) {
+    if (data.savedCards.length === 0) {
+      viewSwap('no-favorite-cards');
+    } else {
+      viewSwap('favorite-cards');
+    }
+  }
+}
+
+$navBarNetworkError.addEventListener('click', networkErrorSearchAnchor);
+function networkErrorSearchAnchor(event) {
+  if (event.target.matches('.search-anchor.ne')) {
+    viewSwap('search-page');
+  } else if (event.target.matches('.favorite-anchor.ne')) {
+    if (data.savedCards.length === 0) {
+      viewSwap('no-favorite-cards');
+    } else {
+      viewSwap('favorite-cards');
+    }
+  }
+}
+
+$navBarNoSavedCards.addEventListener('click', noSavedCardSearchAnchor);
+function noSavedCardSearchAnchor(event) {
+  if (event.target.matches('.search-anchor.nfv')) {
+    $form.reset();
+    viewSwap('search-page');
+  } else if (event.target.matches('.favorite-anchor.nfv')) {
+    if (data.savedCards.length === 0) {
+      viewSwap('no-favorite-cards');
+    } else {
+      viewSwap('favorite-cards');
+    }
   }
 }
 
@@ -54,7 +119,11 @@ function favCard(event) {
 
 $homeScreenFav.addEventListener('click', homeScreenFavSwap);
 function homeScreenFavSwap(event) {
-  swapToFavoriteView();
+  if (data.savedCards.length === 0) {
+    viewSwap('no-favorite-cards');
+  } else {
+    viewSwap('favorite-cards');
+  }
 }
 
 $favCardParentEle.addEventListener('click', modalPop);
@@ -85,7 +154,11 @@ function deleteFavCard(event) {
   if ($favCard != null) {
     $favCard.remove();
   }
-  swapToFavoriteView();
+  if (data.savedCards.length === 0) {
+    viewSwap('no-favorite-cards');
+  } else {
+    viewSwap('favorite-cards');
+  }
   data.inspectedCard = null;
   hideModal();
 }
@@ -99,32 +172,15 @@ function handleContentLoaded(event) {
   }
 }
 
-function swapToSearchView() {
-  var $searchView = document.querySelector('.home-screen');
-  var $cardView = document.querySelector('.card-view');
-  var $favoriteView = document.querySelector('.favorite-cards-view');
-  $form.reset();
-  $searchView.className = 'home-screen';
-  $cardView.className = 'card-view hidden';
-  $favoriteView.className = 'favorite-cards-view hidden';
-}
-
-function swapToCardView() {
-  var $searchView = document.querySelector('.home-screen');
-  var $cardView = document.querySelector('.card-view');
-  var $favoriteView = document.querySelector('.favorite-cards-view');
-  $searchView.className = 'home-screen hidden';
-  $cardView.className = 'card-view';
-  $favoriteView.className = 'favorite-cards-view hidden';
-}
-
-function swapToFavoriteView() {
-  var $searchView = document.querySelector('.home-screen');
-  var $cardView = document.querySelector('.card-view');
-  var $favoriteView = document.querySelector('.favorite-cards-view');
-  $searchView.className = 'home-screen hidden';
-  $cardView.className = 'card-view hidden';
-  $favoriteView.className = 'favorite-cards-view';
+function viewSwap(desiredView) {
+  var $views = document.querySelectorAll('.view');
+  for (var i = 0; i < $views.length; i++) {
+    if ($views[i].getAttribute('data-view') === desiredView) {
+      $views[i].className = 'view';
+    } else {
+      $views[i].className = 'view hidden';
+    }
+  }
 }
 
 function showCardInfo(object) {
@@ -136,6 +192,7 @@ function showCardInfo(object) {
   var $cardMechanics = document.querySelector('.card-text-mechanics');
   var $flavorText = document.querySelector('.flavor-text');
   var $artistName = document.querySelector('.artist');
+  var $extraMechanics = document.querySelector('.xtra-mechanics');
   var splitCardText = object.text.split('\n');
 
   $cardImage.src = object.imageUrl;
@@ -144,6 +201,9 @@ function showCardInfo(object) {
   $cardType.textContent = object.originalType;
   $cardText.textContent = splitCardText[0];
   $cardMechanics.textContent = splitCardText[1];
+  if (splitCardText.length > 2) {
+    $extraMechanics.textContent = splitCardText[2];
+  }
   $flavorText.textContent = object.flavor;
   if (object.flavor == null) {
     $flavorText.textContent = '';
@@ -167,6 +227,7 @@ function saveCard() {
   var $cardType = document.querySelector('.card-type');
   var $cardText = document.querySelector('.card-text');
   var $cardMechanics = document.querySelector('.card-text-mechanics');
+  var $extraMechanics = document.querySelector('.xtra-mechanics');
   var $flavorText = document.querySelector('.flavor-text');
   var $artistName = document.querySelector('.artist');
 
@@ -177,6 +238,7 @@ function saveCard() {
   newObj.cardType = $cardType.textContent;
   newObj.cardText = $cardText.textContent;
   newObj.cardMechanics = $cardMechanics.textContent;
+  newObj.extraMechanics = $extraMechanics.textContent;
   newObj.flavorText = $flavorText.textContent;
   newObj.artistName = $artistName.textContent;
   data.savedCardID++;
@@ -222,6 +284,7 @@ function repopulateModal(object) {
   var $cardType = document.querySelector('.modal.card-type');
   var $cardText = document.querySelector('.modal.card-text');
   var $cardMechanics = document.querySelector('.modal.card-text-mechanics');
+  var $extraMechanics = document.querySelector('.xtra-mechanics');
   var $flavorText = document.querySelector('.modal.flavor-text');
   var $artistName = document.querySelector('.modal.artist');
 
@@ -231,6 +294,36 @@ function repopulateModal(object) {
   $cardType.textContent = object.cardType;
   $cardText.textContent = object.cardText;
   $cardMechanics.textContent = object.cardMechanics;
+  $extraMechanics.textContent = object.extraMechanics;
   $flavorText.textContent = object.flavorText;
   $artistName.textContent = object.artistName;
+}
+
+function resetCardView() {
+  var $cardPic = document.querySelector('.card-image');
+  var $cardInfo = document.querySelector('.text-container');
+  $cardPic.className = 'card-image';
+  $cardInfo.className = 'text-container';
+}
+
+function clearResults() {
+  var $cardImage = document.querySelector('.card-image');
+  var $cardName = document.querySelector('.card-title');
+  var $manaCost = document.querySelector('.mana-cost');
+  var $cardType = document.querySelector('.card-type');
+  var $cardText = document.querySelector('.card-text');
+  var $cardMechanics = document.querySelector('.card-text-mechanics');
+  var $extraMechanics = document.querySelector('.xtra-mechanics');
+  var $flavorText = document.querySelector('.flavor-text');
+  var $artistName = document.querySelector('.artist');
+
+  $cardImage.src = '';
+  $cardName.textContent = '';
+  $manaCost.textContent = '';
+  $cardType.textContent = '';
+  $cardText.textContent = '';
+  $cardMechanics.textContent = '';
+  $extraMechanics.textContent = '';
+  $flavorText.textContent = '';
+  $artistName.textContent = '';
 }
