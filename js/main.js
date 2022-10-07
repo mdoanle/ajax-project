@@ -21,15 +21,14 @@ function handleSubmit(event) {
   xhr.responseType = 'json';
   xhr.addEventListener('load', function () {
     var card = xhr.response.cards[0];
+    if (xhr.status >= 400) {
+      viewSwap('network-error');
+    }
     if (card === undefined) {
       viewSwap('no-results');
     } else {
-      clearResults();
       viewSwap('card-results');
       showCardInfo(card);
-    }
-    if (xhr.status !== 200) {
-      viewSwap('network-error');
     }
   });
   xhr.send();
@@ -37,75 +36,27 @@ function handleSubmit(event) {
 
 $navBarCardView.addEventListener('click', navSearchAnchor);
 function navSearchAnchor(event) {
-  if (event.target.matches('.search-anchor.cv')) {
-    $form.reset();
-    viewSwap('search-page');
-    unfillStar();
-    resetCardView();
-  } else if (event.target.matches('.favorite-anchor.cv')) {
-    if (data.savedCards.length === 0) {
-      viewSwap('no-favorite-cards');
-    } else {
-      viewSwap('favorite-cards');
-    }
-  }
+  navBarFunction();
 }
 
 $navBarFavView.addEventListener('click', favSearchAnchor);
 function favSearchAnchor(event) {
-  if (event.target.matches('.search-anchor.fv')) {
-    $form.reset();
-    viewSwap('search-page');
-    unfillStar();
-    resetCardView();
-  } else if (event.target.matches('.favorite-anchor.fv')) {
-    if (data.savedCards.length === 0) {
-      viewSwap('no-favorite-cards');
-    } else {
-      viewSwap('favorite-cards');
-    }
-  }
+  navBarFunction();
 }
 
 $navBarNoResult.addEventListener('click', noResultSearchAnchor);
 function noResultSearchAnchor(event) {
-  if (event.target.matches('.search-anchor.nr')) {
-    $form.reset();
-    viewSwap('search-page');
-  } else if (event.target.matches('.favorite-anchor.nr')) {
-    if (data.savedCards.length === 0) {
-      viewSwap('no-favorite-cards');
-    } else {
-      viewSwap('favorite-cards');
-    }
-  }
+  navBarFunction();
 }
 
 $navBarNetworkError.addEventListener('click', networkErrorSearchAnchor);
 function networkErrorSearchAnchor(event) {
-  if (event.target.matches('.search-anchor.ne')) {
-    viewSwap('search-page');
-  } else if (event.target.matches('.favorite-anchor.ne')) {
-    if (data.savedCards.length === 0) {
-      viewSwap('no-favorite-cards');
-    } else {
-      viewSwap('favorite-cards');
-    }
-  }
+  navBarFunction();
 }
 
 $navBarNoSavedCards.addEventListener('click', noSavedCardSearchAnchor);
 function noSavedCardSearchAnchor(event) {
-  if (event.target.matches('.search-anchor.nfv')) {
-    $form.reset();
-    viewSwap('search-page');
-  } else if (event.target.matches('.favorite-anchor.nfv')) {
-    if (data.savedCards.length === 0) {
-      viewSwap('no-favorite-cards');
-    } else {
-      viewSwap('favorite-cards');
-    }
-  }
+  navBarFunction();
 }
 
 $starIcon.addEventListener('click', favCard);
@@ -126,8 +77,8 @@ function homeScreenFavSwap(event) {
   }
 }
 
-$favCardParentEle.addEventListener('click', modalPop);
-function modalPop(event) {
+$favCardParentEle.addEventListener('click', modalAppear);
+function modalAppear(event) {
   showModal();
   var $targetDiv = event.target.closest('[data-card-id]');
   var cardID = parseInt($targetDiv.getAttribute('data-card-id'));
@@ -142,7 +93,8 @@ function modalPop(event) {
 
 $modalContainer.addEventListener('click', closeModal);
 function closeModal(event) {
-  if (event.target.matches('.modal-content') || event.target.matches('.img-container') || event.target.matches('.column-half')) {
+  if (event.target.matches('.modal-content') || event.target.matches('.img-container') || event.target.matches('.column-half') || event.target.matches('.row') ||
+  (event.target.matches('.card-image')) || event.target.matches('.text-container')) {
     hideModal();
   }
 }
@@ -193,16 +145,30 @@ function showCardInfo(object) {
   var $flavorText = document.querySelector('.flavor-text');
   var $artistName = document.querySelector('.artist');
   var $extraMechanics = document.querySelector('.xtra-mechanics');
-  var splitCardText = object.text.split('\n');
-
-  $cardImage.src = object.imageUrl;
+  if (object.text) {
+    var splitCardText = object.text.split('\n');
+    $cardText.textContent = splitCardText[0];
+    $cardMechanics.textContent = splitCardText[1];
+    if (splitCardText.length > 2) {
+      $extraMechanics.textContent = splitCardText[2];
+    }
+  }
+  if (object.imageUrl === undefined) {
+    $cardImage.src = 'images/mtgPlaceholder.jpeg';
+  } else {
+    $cardImage.src = object.imageUrl;
+  }
   $cardName.textContent = object.name;
+  for (var i = 0; i < data.savedCards.length; i++) {
+    if (data.savedCards[i].cardTitle === object.name) {
+      fillStar();
+    }
+  }
   $manaCost.textContent = 'Cost: ' + object.manaCost;
-  $cardType.textContent = object.originalType;
-  $cardText.textContent = splitCardText[0];
-  $cardMechanics.textContent = splitCardText[1];
-  if (splitCardText.length > 2) {
-    $extraMechanics.textContent = splitCardText[2];
+  if (object.originalType) {
+    $cardType.textContent = object.originalType;
+  } else if (object.type) {
+    $cardType.textContent = object.type;
   }
   $flavorText.textContent = object.flavor;
   if (object.flavor == null) {
@@ -247,7 +213,7 @@ function saveCard() {
 
 function renderElement(data) {
   var columnDiv = document.createElement('div');
-  columnDiv.setAttribute('class', 'favorite-column-half display-flex ai-center');
+  columnDiv.setAttribute('class', 'favorite-column display-flex ai-center');
   columnDiv.setAttribute('data-card-id', data.savedCardID);
 
   var imgContainerDiv = document.createElement('div');
@@ -306,24 +272,17 @@ function resetCardView() {
   $cardInfo.className = 'text-container';
 }
 
-function clearResults() {
-  var $cardImage = document.querySelector('.card-image');
-  var $cardName = document.querySelector('.card-title');
-  var $manaCost = document.querySelector('.mana-cost');
-  var $cardType = document.querySelector('.card-type');
-  var $cardText = document.querySelector('.card-text');
-  var $cardMechanics = document.querySelector('.card-text-mechanics');
-  var $extraMechanics = document.querySelector('.xtra-mechanics');
-  var $flavorText = document.querySelector('.flavor-text');
-  var $artistName = document.querySelector('.artist');
-
-  $cardImage.src = '';
-  $cardName.textContent = '';
-  $manaCost.textContent = '';
-  $cardType.textContent = '';
-  $cardText.textContent = '';
-  $cardMechanics.textContent = '';
-  $extraMechanics.textContent = '';
-  $flavorText.textContent = '';
-  $artistName.textContent = '';
+function navBarFunction() {
+  if (event.target.matches('.search-anchor')) {
+    $form.reset();
+    viewSwap('search-page');
+    unfillStar();
+    resetCardView();
+  } else if (event.target.matches('.favorite-anchor')) {
+    if (data.savedCards.length === 0) {
+      viewSwap('no-favorite-cards');
+    } else {
+      viewSwap('favorite-cards');
+    }
+  }
 }
