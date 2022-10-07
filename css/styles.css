@@ -47,7 +47,7 @@ body {
 }
 
 ::placeholder {
-  opacity: 0.3;
+  color: rgb(220, 220, 220);
 }
 
 .golos {
@@ -263,7 +263,7 @@ p {
   display: flex;
   padding-top: 10px;
   justify-content: right;
-  padding-right: 10px;
+  width: 90%;
 }
 
 .user-message-no-cards {
@@ -391,6 +391,10 @@ p {
 
   .golos-container {
     margin-top: 5%;
+  }
+
+  .delete-container {
+    width: 78%;
   }
 }
 
