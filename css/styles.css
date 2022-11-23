@@ -43,7 +43,6 @@
 body {
   background: linear-gradient(rgb(2, 1, 2), rgb(79, 57, 101));
   height: 100vh;
-  width: 100vw;
 }
 
 ::placeholder {
