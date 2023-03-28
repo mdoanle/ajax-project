@@ -15,3 +15,10 @@ As a Magic: The Gathering player myself, I wanted to make something that tied in
 ## Live Demo
 
 Try the application live at [mdoanle.github.io/golos/](mdoanle.github.io/golos/)
+
+## Features
+
+- User can search cards
+- User can see results of search
+- User can favorite cards
+- User can see favorited cards
