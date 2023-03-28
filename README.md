@@ -14,4 +14,4 @@ As a Magic: The Gathering player myself, I wanted to make something that tied in
 
 ## Live Demo
 
-Try the application live at [mdoanle.github.io/golos/]
+Try the application live at [mdoanle.github.io/golos/](mdoanle.github.io/golos/)
