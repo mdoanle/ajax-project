@@ -4,7 +4,7 @@ A JavaScript application for Magic: The Gathering players to look up specific Ma
 
 ## Why I Built This
 
-As a Magic: The Gathering player myself, I wanted to make something that tied into one of my passions.  Being able to work with the M:tG API was a dream come true
+As a Magic: The Gathering player myself, I wanted to make something that tied into one of my passions.  Being able to work with the M:tG API was an awesome experience!
 
 ## Technologies Used
 
@@ -12,4 +12,6 @@ As a Magic: The Gathering player myself, I wanted to make something that tied in
 - CSS3
 - JavaScript
 
+## Live Demo
 
+Try the application live at mdoanle.github.io/golos/
