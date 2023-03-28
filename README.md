@@ -8,8 +8,8 @@ As a Magic: The Gathering player myself, I wanted to make something that tied in
 
 ## Technologies Used
 
--HTML5
--CSS3
--JavaScript
+- HTML5
+- CSS3
+- JavaScript
 
 
